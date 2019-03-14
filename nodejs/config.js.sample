@@ -1,0 +1,8 @@
+var config = {
+    accesskey: "___accesskey____",
+    secretkey: "___secretkey____",
+    zabbix_get: "C:\\zabbix-cloudwatch-windows\\zabbix_agent\\bin\\win64\\zabbix_get.exe",
+    domain: "___domain___"
+};
+
+module.exports = config;
