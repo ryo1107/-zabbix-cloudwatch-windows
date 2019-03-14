@@ -26,7 +26,7 @@ run C:\zabbix-cloudwatch-windows\zabbix_agent\batch\install_zabbix_agent_service
 
 ```
 set AGENT="C:\zabbix-cloudwatch-windows\zabbix_agent\bin\win64\zabbix_agentd.exe"
-Ť
+
 set AGENT="C:\aimluck-cloudwatch-windows\zabbix_agent\bin\win32\zabbix_agentd.exe"
 ```
 
