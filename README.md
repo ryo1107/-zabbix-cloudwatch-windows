@@ -2,7 +2,7 @@
 
 ```
 cd C:\
-git clone https://aimluck-develop@bitbucket.org/aimluck-develop/aimluck-cloudwatch-windows-port.git
+git clone https://github.com/ryo1107/zabbix-cloudwatch-windows.git
 ```
 
 ## zabbix_agent
@@ -10,7 +10,7 @@ git clone https://aimluck-develop@bitbucket.org/aimluck-develop/aimluck-cloudwat
 download latest zabbix_agent from http://www.zabbix.com/jp/download.php
 
 ```
-unzip to C:\aimluck-cloudwatch-windows-port\zabbix_agent
+unzip to C:\zabbix-cloudwatch-windows\zabbix_agent
 ```
 
 copy template\conf to zabbix_agent
@@ -18,22 +18,22 @@ copy template\conf to zabbix_agent
 ### install zabbix agent service
 
 ```
-run C:\aimluck-cloudwatch-windows-port\zabbix_agent\batch\install_zabbix_agent_service.bat
+run C:\zabbix-cloudwatch-windows\zabbix_agent\batch\install_zabbix_agent_service.bat
 ```
 
 * if you use Windows_x86, edit install_zabbix_agent_service.bat, uninstall_zabbix_agent_service.bat
 * if you use Windows 2008 R2 or later, you needs administrator role to execute batch
 
 ```
-set AGENT="C:\aimluck-cloudwatch-windows-port\zabbix_agent\bin\win64\zabbix_agentd.exe"
+set AGENT="C:\zabbix-cloudwatch-windows\zabbix_agent\bin\win64\zabbix_agentd.exe"
 Ť
-set AGENT="C:\aimluck-cloudwatch-windows-port\zabbix_agent\bin\win32\zabbix_agentd.exe"
+set AGENT="C:\aimluck-cloudwatch-windows\zabbix_agent\bin\win32\zabbix_agentd.exe"
 ```
 
 ### start zabbix agent
 
 ```
-run C:\aimluck-cloudwatch-windows-port\zabbix_agent\batch\start_zabbix_agent_service.bat
+run C:\zabbix-cloudwatch-windows\zabbix_agent\batch\start_zabbix_agent_service.bat
 ```
 
 please settings auto start in Service and Applications
@@ -51,22 +51,22 @@ edit config.js
 ```
 accesskey: ___accesskey____, 
 secretkey: ___secretkey____,
-zabbix_get: "C:\\aimluck-cloudwatch-windows-port\\zabbix_agent\\bin\\win64\\zabbix_get.exe";
+zabbix_get: "C:\\zabbix-cloudwatch-windows\\zabbix_agent\\bin\\win64\\zabbix_get.exe";
 ```
 
 install modules
 
 ```
-cd C:\aimluck-cloudwatch-windows-port\nodejs
+cd C:\zabbix-cloudwatch-windows\nodejs
 npm install aws-sdk
 ```
 
-### test
+### test cloudwatch-put.js
 
 run test
 
 ```
-node C:\aimluck-cloudwatch-windows-port\nodejs\cloudwatch-put.js debug
+node C:\zabbix-cloudwatch-windows\nodejs\cloudwatch-put.js debug
 ```
 
 check display data 
@@ -74,22 +74,33 @@ check display data
 plot test
 
 ```
-node C:\aimluck-cloudwatch-windows-port\nodejs\cloudwatch-put.js >> C:\aimluck-cloudwatch-windows\nodejs\cloudwatch-put.log 2>&1
+node C:\zabbix-cloudwatch-windows\nodejs\cloudwatch-put.js >> C:\zabbix-cloudwatch-windows\nodejs\cloudwatch-put.log 2>&1
 ```
 
-```
-* if network sent and receive value is 0, please type [ typeperf -qx "\Network Interface" ] in cmd.
-  choose a "Network Interface" in the display, ex: Intel[R] PRO_1000 MT Desktop Adapter.
-  and edit cloudwatch-put.js
-  ---
-  Network Interface(*)
-  Ť
-  Network Interface(Intel[R] PRO_1000 MT Desktop Adapter)
-  ---
+check cloudwatch
 
-  more debug
-  typeperf "\Network Interface(*)\Bytes Received/sec"
-  typeperf "\Network Interface(*)\Bytes Sent/sec"
+### test cloudwatch-server.js
+
+Please change port_num if necessary
+
+run test
+
+```
+node C:\zabbix-cloudwatch-windows\nodejs\cloudwatch-server.js debug
+```
+
+check display data 
+
+```
+port num=80: 0 Count
+port num=53: 0 Count
+port num=3389: 1 Count
+```
+
+plot test
+
+```
+node C:\zabbix-cloudwatch-windows\nodejs\cloudwatch-server.js >> C:\zabbix-cloudwatch-windows\nodejs\cloudwatch-server.log 2>&1
 ```
 
 check cloudwatch
@@ -101,16 +112,4 @@ run per 5 miniute
 start menu > accessory > system tool > task
 add scheduled task
 
-```
-schedule_type: daily
-start_time: any
-duration: per one day
-detail > 
-  start day: today
-  end day: none
-  repeat: on >
-    duration: 5 minute
-    duration_term: 24 hour
-```
-
-C:\aimluck-cloudwatch-windows-port\nodejs\cloudwatch-put.vbs
+C:\zabbix-cloudwatch-windows-port\nodejs\cloudwatch-put.vbs
